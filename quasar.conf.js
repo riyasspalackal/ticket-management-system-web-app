@@ -7,6 +7,7 @@
 // https://v1.quasar.dev/quasar-cli/quasar-conf-js
 /* eslint-env node */
 const ESLintPlugin = require('eslint-webpack-plugin')
+const envparsers = require('./envparser');
 
 module.exports = function (/* ctx */) {
   return {
@@ -22,6 +23,10 @@ module.exports = function (/* ctx */) {
     boot: [
 
     ],
+
+    plugins: [
+          'axios','dateformat'
+        ],
 
     // https://v1.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
     css: [
@@ -45,7 +50,7 @@ module.exports = function (/* ctx */) {
     // Full list of options: https://v1.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
     build: {
       vueRouterMode: 'hash', // available values: 'hash', 'history'
-
+      env: envparsers(),
       // transpile: false,
 
       // Add dependencies for transpiling with Babel (Array of string/regex)
@@ -96,7 +101,7 @@ module.exports = function (/* ctx */) {
       // directives: [],
 
       // Quasar plugins
-      plugins: []
+      plugins: ['Notify']
     },
 
     // animations: 'all', // --- includes all animations

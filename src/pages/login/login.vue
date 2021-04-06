@@ -50,7 +50,7 @@
               <div>
                 <q-btn
                   label="Login"
-                  to="/dashboard"
+                  
                   type="button"
                   color="primary"
                   @click="login()"
@@ -66,23 +66,50 @@
 
 <script type="text/javascript"></script>
 <script>
+  import axios from "axios";
+  import { Notify } from "quasar";
 
 
-    export default {
-        data() {
-            return {
-                username: 'admin',
-                password: 'Admin@CRM'
-            }
-        },
-methods: {
-           login(){
-             
-           }
-         },
-        mounted() {}
-           
+  export default {
+    data() {
+      return {
+        username: 'admin',
+        password: 'admin123'
+      }
+    },
+    methods: {
+      login() {
+        var data = {};
+        data.username = this.username;
+        data.password = this.password;
+      
+          axios.post(process.env.LOGIN_END_POINT, data)
+            .then(res => {
+              if (res.data.status == 'error') {
+               
+                Notify.create({
+                  message: res.data.user_message,
+                  color: 'negative',
+                   icon: 'report_problem',
+                   position: "top-right",
+                });
+                
+              }else if(res.data.access_token){
+                 localStorage.setItem("user_details", JSON.stringify(res.data))
+                 this.$router.push('dashboard')
+              }
+            })
+            .catch(e => {
+              console.log(e);
+            })
+        
+      },
+
+    },
+    mounted() {
+      console.log(process.env.LOGIN_END_POINT);
     }
+  }
 </script>
 
 <style>
