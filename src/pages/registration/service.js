@@ -29,6 +29,27 @@ export default class Request {
       }
     })
   }
+  updateEvent(data,id, callback) {
+    return new Promise((resolve, reject) => {
+      try {
+        axios
+          .post(
+            process.env.UPDATE_EVENT + '/' + id, data, {
+                    headers: {
+                        'Authorization': token_type + access_token
+                    }
+                }
+          )
+          .then(response => {
+            if (response ) {
+              resolve(response);
+            }
+          });
+      } catch (err) {
+        callback(data);
+      }
+    })
+  }
 
   getAllEvent(callback) {
     return new Promise((resolve, reject) => {
@@ -58,6 +79,50 @@ export default class Request {
         axios
           .get(
             process.env.GET_LINEUP_BY_EVENT_ID + '/' + id, {
+                    headers: {
+                        'Authorization': token_type + access_token
+                    }
+                }
+          )
+          .then(response => {
+            if (response ) {
+              resolve(response);
+            }
+          });
+      } catch (err) {
+        callback(data);
+      }
+    })
+  }
+  //get event details and lineups list
+  getEventDetails(id,callback) {
+    return new Promise((resolve, reject) => {
+      try {
+        axios
+          .get(
+            process.env.GET_EVENT_DETAILS + '/' + id, {
+                    headers: {
+                        'Authorization': token_type + access_token
+                    }
+                }
+          )
+          .then(response => {
+            if (response ) {
+              resolve(response);
+            }
+          });
+      } catch (err) {
+        callback(data);
+      }
+    })
+  }
+
+  deleteEvent(id,callback) {
+    return new Promise((resolve, reject) => {
+      try {
+        axios
+          .get(
+            process.env.DELETE_EVENT + '/' + id, {
                     headers: {
                         'Authorization': token_type + access_token
                     }

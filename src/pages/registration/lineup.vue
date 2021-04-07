@@ -12,6 +12,11 @@
       </q-timeline-entry>
       
     </q-timeline>
+    <div v-if="lineUpsNotFound">
+      <p>
+        Line up not found
+      </p>
+    </div>
   </div>
 </template>
 
@@ -26,16 +31,19 @@ export default {
   data () {
     return {
       lineList:[],
+      lineUpsNotFound:false
     }
   },
   methods: {
     getLineUpByEventId(id){
       service.getLineUpByEventId(id).then(
         result => {
-        if (!result.data.status) {
+          console.log(result);
+        if (result.data.message) {
+          this.lineUpsNotFound = true;
+        }else{
           this.lineList = result.data;
         }
-        console.log(this.lineList);
         }, error => {})
     },
     date_conversion(date){

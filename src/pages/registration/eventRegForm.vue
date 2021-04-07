@@ -20,7 +20,7 @@
           <q-item>
             <q-item-section>
               <q-item-label class="q-pb-xs">Event Description</q-item-label>
-              <q-input dense outlined v-model="Event.evt_desc" label="Event Name" ref="evt_desc"  :rules="[val => !!val || 'Field is required']" />
+              <q-input dense outlined v-model="Event.evt_desc" label="Event discription" ref="evt_desc"  :rules="[val => !!val || 'Field is required']" />
             </q-item-section>
           </q-item>
           <q-item>
@@ -104,7 +104,7 @@
             <q-item>
               <q-item-section>
                 <q-item-label class="q-pb-xs"> Event Lineup Description</q-item-label>
-                <q-input v-model="eventLineup.desc" label="Description" />
+                <q-input v-model="eventLineup.lineup_desc" label="Description" />
               </q-item-section>
 
             </q-item>
@@ -169,6 +169,7 @@
     }
 
     export default {
+        props:['eventId'],
         components:{
           lineup
         },
@@ -183,7 +184,7 @@
                   silver_ticket:{}
                 },
                 lineup:[{
-                  "desc":'',
+                  "lineup_desc":'',
                   "date_and_time": new Date()
                 }],
                
@@ -193,7 +194,7 @@
         methods: {
            addNewLineUp(){
              this.lineup.push({
-                  "desc":null,
+                  "lineup_desc":null,
                   "date_and_time": new Date()
                 })
            },
@@ -210,25 +211,51 @@
               }else {
                 let lineUp = [];
                 lineUp = this.lineup.filter((item) => {
-                  if (item.desc) {
+                  if (item.lineup_desc) {
                     return item
                   }
                 })
                 console.log(lineUp);
                 let data;
-                data= {...JSON.parse(JSON.stringify(this.Event)), ...{"lineups" : lineUp}};
+                data= {...JSON.parse(JSON.stringify(this.Event)), ...{"event_lineup" : lineUp}};
+                if (!this.eventId) {
+                  service.submitEventRegistration(data).then(
+                    result => {
+                      this.$emit('emitFromEventRegForm', true);
+                    }, error => {})
+                }else{
                 console.log(data); 
-                service.submitEventRegistration(data).then(
-                 result => {
-                   this.$emit('emitFromEventRegForm', true);
-                 }, error => {})
+                service.updateEvent(data,this.eventId).then(
+                    result => {
+                      this.$emit('emitFromEventRegForm', true);
+                    }, error => {})
+                }     
               }
              
             
+           },
+           getEventDetails(id){
+             service.getEventDetails(id).then(
+               result => {
+                 console.log(result);
+                 this.lineup = [];
+                 this.lineup = result.data.event_lineup;
+                 console.log(this.lineup );
+                 this.Event = result.data;
+                 this.Event = {
+                  golden_ticket: result.data.golden_ticket ? JSON.parse(result.data.golden_ticket) : {},
+                  platinum_ticket:result.data.platinum_ticket ? JSON.parse(result.data.platinum_ticket) : {},
+                  silver_ticket:result.data.silver_ticket ? JSON.parse(result.data.silver_ticket) : {},
+                  evt_desc: result.data.evt_desc ? result.data.evt_desc : '',
+                  evt_name: result.data.evt_name ? result.data.evt_name : '', 
+                  location: result.data.location ? result.data.location : '', 
+                  
+                  }
+               }, error => {})
            }
         },
         mounted(){
-           
+           this.eventId ? this.getEventDetails(this.eventId) : ''
         }
     };
 </script>

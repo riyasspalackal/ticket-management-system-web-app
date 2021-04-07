@@ -53,9 +53,17 @@
           >
             {{ col.value }}
           </q-td>
-          <q-td  style="text-align: center;">
-            <!-- <q-btn label="ddd" size="sm" color="accent" round dense @click="props.expand = !props.expand" :icon="props.expand ? 'remove' : 'add'" /> -->
+          <q-td  style="text-align: center;width: 20px;">
+           
             <q-btn color="secondary" :label="props.expand ? 'Hide' : 'View lineups'" @click="props.expand = !props.expand" />
+          </q-td>
+          <q-td  style="text-align: center; width: 20px;">
+            <q-btn size="sm" color="accent" round dense @click="editEvent(props.row.id)" icon="edit" />
+            
+          </q-td>
+          <q-td  style="text-align: center; width: 20px;">
+            <q-btn size="sm" color="negative" round dense @click="deleteEvent(props.row.id)" icon="delete" />
+            
           </q-td>
         </q-tr>
         <q-tr v-show="props.expand" :props="props">
@@ -68,7 +76,7 @@
     </q-table>
     </q-card>
     <q-dialog v-model="new_Event">
-      <EventRegForm @emitFromEventRegForm="saveEventReg"></EventRegForm>
+      <EventRegForm :eventId="editEventId" @emitFromEventRegForm="saveEventReg"></EventRegForm>
     </q-dialog>
   </q-page>
 </template>
@@ -80,16 +88,6 @@
     import EventRegForm from './eventRegForm'
     const service = new Request();
 
-    function wrapCsvValue(val, formatFn) {
-        let formatted = formatFn !== void 0 ? formatFn(val) : val;
-
-        formatted =
-            formatted === void 0 || formatted === null ? "" : String(formatted);
-
-        formatted = formatted.split('"').join('""');
-
-        return `"${formatted}"`;
-    }
 
     export default {
         components:{
@@ -112,6 +110,7 @@
                 }],
                 new_Event: false,
                 mode: "list",
+                editEventId:null,
                 columns: [
                     {
                         name: "desc",
@@ -155,6 +154,7 @@
           saveEventReg(data) {
             if (data) {
               this.new_Event= false;
+              this.editEventId = null;
               this.$q.notify({
                   color: 'secondary',
                   message: 'New Event Registered sucessfully'
@@ -163,9 +163,12 @@
             }
           },
            getEventList(){
+             this.$q.loading.show();
              let data=[]
+             this.eventList=[];
              service.getAllEvent().then(
              result => {
+               this.$q.loading.hide();
                if (!result.data.status) {
                 data = result.data;
                }
@@ -177,15 +180,31 @@
                    id:element.id
                  })
                });
-               console.log(this.eventList);
-
+          
              }, error => {})
+           },
+           editEvent(id){
+             this.editEventId = id;
+             this.new_Event=true
+           },
+           deleteEvent(id) {
+             this.$q.dialog({
+               title: 'Confirm',
+               message: `Are you sure to delete this event?`,
+               color: 'negative',
+               ok: `Yes, I'm sure`,
+               cancel: true,
+               default: 'cancel'
+             }).onOk(() => {
+             this.$q.loading.show();
+             service.deleteEvent(id, this.eventId).then(
+               result => {
+                 this.getEventList()
+               }, error => {}) })
            }
         },
         mounted(){
           this.getEventList()
-          console.log(process.env.LOGIN_END_POINT);
-           
         }
     };
 </script>

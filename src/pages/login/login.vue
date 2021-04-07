@@ -27,7 +27,7 @@
               class="absolute"
               style="top: 0;right: 25px;transform: translateY(-50%);"
             >
-              <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
+              
             </q-avatar>
             <div class="row no-wrap items-center">
               <div class="col text-h6 ellipsis">
@@ -107,7 +107,7 @@
 
     },
     mounted() {
-      console.log(process.env.LOGIN_END_POINT);
+      localStorage.clear();
     }
   }
 </script>

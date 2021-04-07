@@ -15,7 +15,7 @@
         />
       
 
-        <q-toolbar-title>CRM Admin</q-toolbar-title>
+        <q-toolbar-title>Event Management System</q-toolbar-title>
         <q-btn
           class="q-mr-xs"
           flat
@@ -23,30 +23,18 @@
           @click="$q.dark.toggle()"
           :icon="$q.dark.isActive ? 'nights_stay' : 'wb_sunny'"
         />
-        <a
-          style="font-size: 25px;"
-          class="float-right q-mr-sm"
-          href="https://github.com/sponsors/mayank091193"
-          target="_blank"
-          title="Donate"
-          ><i class="fas fa-heart" style="color: #eb5daa"></i
-        ></a>
+        
         <q-btn flat round dense icon="search" class="q-mr-xs" />
-        <q-btn
-          flat
-          round
-          dense
-          icon="fas fa-sign-out-alt"
-          @click="logoutNotify"
-          to="/"
-        />
+        <q-btn @click="logoutNotify"
+          to="/"> Log out</q-btn>
+        
       </q-toolbar>
     </q-header>
     <q-drawer
       class="left-navigation text-white"
       show-if-above
       v-model="left"
-      style="background-image: url(https://demos.creative-tim.com/vue-material-dashboard/img/sidebar-2.32103624.jpg) !important;"
+      
       side="left"
       elevated
     >
@@ -56,11 +44,8 @@
       >
         <div style="height: calc(100% - 117px);padding:10px;">
           <q-toolbar>
-            <q-avatar>
-              <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
-            </q-avatar>
-
-            <q-toolbar-title>User Name</q-toolbar-title>
+            
+            <q-toolbar-title>{{userinfo ? userinfo.user.name : ''}}</q-toolbar-title>
           </q-toolbar>
           <hr />
           <q-scroll-area style="height:100%;">
@@ -81,11 +66,6 @@
                   Dashboard
                 </q-item-section>
               </q-item>
-
-              
-
-              
-
               <q-item
                 active-class="tab-active"
                 to="/registration-page"
@@ -101,21 +81,7 @@
                  Event Details
                 </q-item-section>
               </q-item>
-              <q-item
-                active-class="tab-active"
-                to="/my_profile"
-                class="q-ma-sm navigation-item"
-                clickable
-                v-ripple
-              >
-                <q-item-section avatar>
-                  <q-icon name="drafts" />
-                </q-item-section>
-
-                <q-item-section>
-                  My Profile
-                </q-item-section>
-              </q-item>
+              
             </q-list>
           </q-scroll-area>
         </div>
@@ -140,7 +106,8 @@
 export default {
   data() {
     return {
-      left: false
+      left: false,
+      userinfo:''
     };
   },
   methods: {
@@ -149,6 +116,9 @@ export default {
         message: "Logged out"
       });
     }
+  },
+  mounted(){
+    this.userinfo =  JSON.parse(localStorage.getItem('user_details'));
   }
 };
 </script>
