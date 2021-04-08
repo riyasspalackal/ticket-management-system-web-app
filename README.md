@@ -23,4 +23,4 @@ bash script for development purpose
 ```bash
 ./run_server.sh prod
 ```
-### After deploy backend and replace http://127.0.0.1:8000/ with new prod link in to .env.prod
+### After deploy backend and replace http://127.0.0.1:8000/ with new PROD link in to .env.prod file
