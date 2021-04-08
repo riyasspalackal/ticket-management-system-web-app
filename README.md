@@ -17,7 +17,9 @@ quasar dev
 npm run lint
 ```
 
-### Build the app for production
+### Production Build Steps
+bash script for development purpose
+### To run this bash from terminal ./run_server.sh dev,qa,staging,prod if no env it will fallback to prod
 ```bash
-quasar build
+./run_server.sh prod
 ```

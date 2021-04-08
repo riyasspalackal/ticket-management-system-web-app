@@ -44,6 +44,7 @@ export default {
       password: '',
       authError : false,
       events:[],
+      ticketsStatics:[],
       stackedBarOptions: {
         tooltip: {
           trigger: 'axis',
@@ -109,19 +110,19 @@ export default {
   },
   methods: {
     submit () {
-      //  this.$router.replace('dashboard');
+     
     },
-    changeEvent(event){
-      let goldTktCapcity = event.golden_ticket ? JSON.parse(event.golden_ticket).capacity ? parseInt(JSON.parse(event.platinum_ticket).capacity) : '' : '';
-      let platTktCapcity = event.platinum_ticket ? JSON.parse(event.platinum_ticket).capacity ? parseInt(JSON.parse(event.platinum_ticket).capacity) : '' : '';
-      let silverTktCapcity = event.silver_ticket ? JSON.parse(event.silver_ticket).capacity ? parseInt(JSON.parse(event.silver_ticket).capacity) : '' : '';
-
-
-      this.stackedBarOptions.series[0].data =[goldTktCapcity ? goldTktCapcity : 0, 
-                                              silverTktCapcity ? silverTktCapcity : 0, 
-                                              platTktCapcity ? platTktCapcity : 0];
-      this.stackedBarOptions.series[1].data =[68, 56, 10];
-
+    changeEvent(event) {
+      this.stackedBarOptions.yAxis[0].data = [];
+      this.stackedBarOptions.series[0].data = [];
+      this.stackedBarOptions.series[1].data = [];
+      this.ticketsStatics.forEach(element => {
+        if (element.evt_id == event.id) {
+          this.stackedBarOptions.yAxis[0].data.push(element.ticket_type)
+          this.stackedBarOptions.series[0].data.push(element.available_ticket)
+          this.stackedBarOptions.series[1].data.push(element.capacity - element.available_ticket)
+        }
+      });
     },
     getEventList() {
       service.getAllEvent().then(
@@ -130,14 +131,23 @@ export default {
             this.events = result.data;
           }
         }, error => {})
-    }
+    },
+    getAllTicketStatics() {
+      service.getAllTicketStatics().then(
+        result => {
+          if (!result.data.status) {
+            this.ticketsStatics = result.data;
+          }
+          console.log(this.ticketsStatics);
+        }, error => {})
+    },
   },
   mounted(){
     this.getEventList();
+    this.getAllTicketStatics();
     this.stackedBarOptions.series[0].data = [100, 200, 500];
     this.stackedBarOptions.series[1].data =[100, 180, 250];
-    
-     this.$forceUpdate();
+    this.$forceUpdate();
   }
 }
 </script>

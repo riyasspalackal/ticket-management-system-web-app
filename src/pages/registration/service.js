@@ -202,4 +202,25 @@ export default class Request {
       }
     })
   }
+  getAllTicketStatics(callback) {
+    return new Promise((resolve, reject) => {
+      try {
+        axios
+          .get(
+            process.env.STATICS, {
+                    headers: {
+                        'Authorization': token_type + access_token
+                    }
+                }
+          )
+          .then(response => {
+            if (response ) {
+              resolve(response);
+            }
+          });
+      } catch (err) {
+        callback(data);
+      }
+    })
+  }
 }
