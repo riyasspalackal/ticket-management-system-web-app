@@ -12,10 +12,10 @@ npm install
 quasar dev
 ```
 
-### Lint the files
-```bash
-npm run lint
-```
+
+### Dotenv module is used for loads environment variables from a .env file into process.env.
+### All API's Fetch from .env file
+
 
 ### Production Build Steps
 bash script for development purpose
@@ -23,3 +23,4 @@ bash script for development purpose
 ```bash
 ./run_server.sh prod
 ```
+### After deploy backend and replace http://127.0.0.1:8000/ with new prod link in to .env.prod
