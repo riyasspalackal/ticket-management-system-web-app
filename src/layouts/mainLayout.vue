@@ -50,7 +50,7 @@
           <hr />
           <q-scroll-area style="height:100%;">
             <q-list padding>
-              <q-item
+              <q-item v-if="userinfo ? userinfo.user.user_type == 1 : ''"
                 active-class="tab-active"
                 to="/dashboard"
                 exact
@@ -66,7 +66,23 @@
                   Dashboard
                 </q-item-section>
               </q-item>
-              <q-item
+              <q-item v-if="userinfo ? userinfo.user.user_type == 2 : ''"
+                active-class="tab-active"
+                to="/booking-page"
+                exact
+                class="q-ma-sm navigation-item"
+                clickable
+                v-ripple
+              >
+                <q-item-section avatar>
+                  <q-icon name="dashboard" />
+                </q-item-section>
+
+                <q-item-section>
+                  Booking
+                </q-item-section>
+              </q-item>
+              <q-item v-if="userinfo ? userinfo.user.user_type == 1 : ''"
                 active-class="tab-active"
                 to="/registration-page"
                 class="q-ma-sm navigation-item"

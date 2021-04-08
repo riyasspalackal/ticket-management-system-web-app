@@ -138,4 +138,68 @@ export default class Request {
       }
     })
   }
+  getTickets(id,callback) {
+    return new Promise((resolve, reject) => {
+      try {
+        axios
+          .get(
+            process.env.GET_TICKET + '/' + id, {
+                    headers: {
+                        'Authorization': token_type + access_token
+                    }
+                }
+          )
+          .then(response => {
+            if (response ) {
+              resolve(response);
+            }
+          });
+      } catch (err) {
+        callback(data);
+      }
+    })
+  }
+   booking(data, callback) {
+    console.log(access_token);
+    return new Promise((resolve, reject) => {
+      try {
+        axios
+          .post(
+            process.env.BOOKING, data, {
+                    headers: {
+                        'Authorization': token_type + access_token
+                    }
+                }
+          )
+          .then(response => {
+            if (response ) {
+              resolve(response);
+            }
+          });
+      } catch (err) {
+        callback(data);
+      }
+    })
+  }
+  getAllBooking(callback) {
+    return new Promise((resolve, reject) => {
+      try {
+        axios
+          .get(
+            process.env.GET_ALL_BOOKED, {
+                    headers: {
+                        'Authorization': token_type + access_token
+                    }
+                }
+          )
+          .then(response => {
+            if (response ) {
+              resolve(response);
+            }
+          });
+      } catch (err) {
+        callback(data);
+      }
+    })
+  }
 }

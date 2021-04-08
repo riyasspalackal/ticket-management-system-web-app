@@ -96,7 +96,8 @@
                 
               }else if(res.data.access_token){
                  localStorage.setItem("user_details", JSON.stringify(res.data))
-                 this.$router.push('dashboard')
+                 res.data.user.user_type == 1 ?  this.$router.push('dashboard') : ''
+                 res.data.user.user_type == 2 ?  this.$router.push('booking-page') : ''
               }
             })
             .catch(e => {

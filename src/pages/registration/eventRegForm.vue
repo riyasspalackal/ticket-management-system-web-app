@@ -32,59 +32,26 @@
 
           <q-item>
             <div class="q-pa-md row items-start q-gutter-md">
-              <q-card class="my-card">
-                <q-card-section class="q-pt-xs">
-                  <div class="text-h6">Gold</div>
-
-                </q-card-section>
-
-                <q-separator />
-
+              <q-card class="my-card" v-for="ticket in tickets">
+              
                 <q-card-actions vertical>
                   <q-item-section>
-                    <q-item-label class="q-pb-xs">Enter capacity and price</q-item-label>
-                    <q-input type="number" dense outlined v-model="Event.golden_ticket.capacity" label="Capacity" />
-                    <q-input type="number" style="margin-top:20px" dense outlined v-model="Event.golden_ticket.price" label="price" />
+                    <q-item-label class="q-pb-xs">Enter ticket details</q-item-label>
+                    <q-input  dense outlined v-model="ticket.ticket_type" label="Enter ticket type" />
+                    <q-input style="margin-top:20px" type="number" dense outlined v-model="ticket.capacity" label="Enter ticket capacity" />
+                    <q-input type="number" style="margin-top:20px" dense outlined v-model="ticket.price" label="Enter price" />
                   </q-item-section>
 
                 </q-card-actions>
               </q-card>
+             
               <q-card class="my-card">
                 <q-card-section class="q-pt-xs">
-                  <div class="text-h6">Silver</div>
+                   <q-btn size="sm" color="negative" round dense @click="tickets.push({ ticket_type:'', capacity:'', price: '' })" icon="add" />
 
                 </q-card-section>
-
-                <q-separator />
-
-                <q-card-actions vertical>
-                  <q-item-section>
-                    <q-item-label class="q-pb-xs">Enter capacity and price</q-item-label>
-                    <q-input dense outlined v-model="Event.silver_ticket.capacity" label="Capacity" />
-                    <q-input style="margin-top:20px" dense outlined v-model="Event.silver_ticket.price" label="price" />
-                  </q-item-section>
-
-                </q-card-actions>
               </q-card>
-
-              <q-card class="my-card">
-                <q-card-section class="q-pt-xs">
-                  <div class="text-h6">Platinum</div>
-
-                </q-card-section>
-
-                <q-separator />
-
-                <q-card-actions vertical>
-                  <q-item-section>
-                    <q-item-label class="q-pb-xs">Enter capacity and price</q-item-label>
-                    <q-input dense outlined v-model="Event.platinum_ticket.capacity" label="Capacity" />
-                    <q-input style="margin-top:20px" dense outlined v-model="Event.platinum_ticket.price"
-                      label="price" />
-                  </q-item-section>
-
-                </q-card-actions>
-              </q-card>
+              
             </div>
           </q-item>
 
@@ -179,14 +146,16 @@
                 date: '',
                 filter: "",
                 Event: {
-                  golden_ticket:{},
-                  platinum_ticket:{},
-                  silver_ticket:{}
                 },
                 lineup:[{
                   "lineup_desc":'',
                   "date_and_time": new Date()
                 }],
+                tickets:[{
+                  ticket_type:'',
+                  capacity:'',
+                  price: ''
+                }]
                
               
             };
@@ -215,10 +184,17 @@
                     return item
                   }
                 })
+                let tickets = [];
+                tickets = this.tickets.filter((item) => {
+                  if (item.ticket_type) {
+                    return item
+                  }
+                })
                 console.log(lineUp);
                 let data;
-                data= {...JSON.parse(JSON.stringify(this.Event)), ...{"event_lineup" : lineUp}};
+                data= {...JSON.parse(JSON.stringify(this.Event)), ...{"event_lineup" : lineUp},...{"tickets" : tickets}};
                 if (!this.eventId) {
+                  console.log(data);
                   service.submitEventRegistration(data).then(
                     result => {
                       this.$emit('emitFromEventRegForm', true);
@@ -239,13 +215,10 @@
                result => {
                  console.log(result);
                  this.lineup = [];
-                 this.lineup = result.data.event_lineup;
-                 console.log(this.lineup );
+                 this.lineup = result.data.event_lineup ? result.data.event_lineup: '';
+                 this.tickets = result.data.ticket ?  result.data.ticket : '';
                  this.Event = result.data;
                  this.Event = {
-                  golden_ticket: result.data.golden_ticket ? JSON.parse(result.data.golden_ticket) : {},
-                  platinum_ticket:result.data.platinum_ticket ? JSON.parse(result.data.platinum_ticket) : {},
-                  silver_ticket:result.data.silver_ticket ? JSON.parse(result.data.silver_ticket) : {},
                   evt_desc: result.data.evt_desc ? result.data.evt_desc : '',
                   evt_name: result.data.evt_name ? result.data.evt_name : '', 
                   location: result.data.location ? result.data.location : '', 
