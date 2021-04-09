@@ -24,3 +24,18 @@ bash script for development purpose
 ./run_server.sh prod
 ```
 ### After deploy backend and replace http://127.0.0.1:8000/ with new PROD link in to .env.prod file
+
+########### LOGIN PAGE
+<img width="1669" alt="Screenshot 2021-04-09 at 9 28 55 PM" src="https://user-images.githubusercontent.com/15151953/114207986-98969f80-997a-11eb-8323-d3afb3c4a061.png">
+
+#### Two type of user
+* admin user :- admin user can create event registration and view statics of event
+  * username : admin
+  * password : admin123
+* user   :- user can create booking 
+  * username : user
+  * password : admin123
+ 
+
+
+
