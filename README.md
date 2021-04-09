@@ -44,11 +44,26 @@ bash script for development purpose
 You can create event from ADD NEW Button and also Edit and Delete event is possible from here.
 <img width="1675" alt="Screenshot 2021-04-09 at 9 36 00 PM" src="https://user-images.githubusercontent.com/15151953/114208862-96811080-997b-11eb-86c6-3ead14d8b834.png">
 
-#### CREATE EVENT LIST
+#### CREATE NEW EVENT
 <img width="1679" alt="Screenshot 2021-04-09 at 9 37 28 PM" src="https://user-images.githubusercontent.com/15151953/114209013-ca5c3600-997b-11eb-8c6a-9a5a710ca9d5.png">
+Add date and time for event lineups
+<img width="1671" alt="Screenshot 2021-04-09 at 9 49 43 PM" src="https://user-images.githubusercontent.com/15151953/114210534-823e1300-997d-11eb-9f89-265e4ffb00ad.png">
+<img width="1675" alt="Screenshot 2021-04-09 at 9 50 48 PM" src="https://user-images.githubusercontent.com/15151953/114210909-a7328600-997d-11eb-9015-f51406d5d7cf.png">
 
 #### EVENT LINEUPS
 <img width="1670" alt="Screenshot 2021-04-09 at 9 39 29 PM" src="https://user-images.githubusercontent.com/15151953/114209283-1313ef00-997c-11eb-9593-de8a89204c51.png">
+
+#### USER DASHBOARD
+Here user can create ticket booking and view history of ticket booking
+<img width="1676" alt="Screenshot 2021-04-09 at 9 44 29 PM" src="https://user-images.githubusercontent.com/15151953/114209888-c4b32000-997c-11eb-81e1-f9dd28fd7160.png">
+
+<img width="1680" alt="Screenshot 2021-04-09 at 9 48 39 PM" src="https://user-images.githubusercontent.com/15151953/114210385-5ae74600-997d-11eb-813d-50fba218a824.png">
+
+
+#### TICKET BOOKING PAGE
+Here you can select event and know the availability of ticket.
+<img width="1676" alt="Screenshot 2021-04-09 at 9 46 22 PM" src="https://user-images.githubusercontent.com/15151953/114210137-093ebb80-997d-11eb-8434-dea186c066ee.png">
+
 
 
 
