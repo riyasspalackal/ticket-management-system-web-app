@@ -2,7 +2,7 @@
   <q-card style="width: 800px; max-width: 60vw;">
     <q-card-section>
       <div class="text-h5">
-        Add new event registration
+        Add new ticket booking
         <q-btn round flat dense icon="close" class="float-right" color="grey-8" v-close-popup></q-btn>
       </div>
     </q-card-section>

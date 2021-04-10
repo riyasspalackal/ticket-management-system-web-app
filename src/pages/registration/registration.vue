@@ -2,7 +2,7 @@
   <q-page class="q-pa-sm">
     <q-card>
       <q-table
-      title="Treats"
+      title=""
       :data="eventList"
       :columns="columns"
       row-key="name"
