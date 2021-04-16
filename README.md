@@ -2,6 +2,15 @@
 
 A Quasar Framework app
 
+## First, we install Quasar CLI. Make sure you have Node >=8 and NPM >=5 installed on your machine.
+make sure you have vue-cli globally installed
+```bash
+npm install -g vue-cli
+```
+```bash
+npm install -g quasar-cli
+```
+
 ## Install the dependencies
 ```bash
 npm install
@@ -11,6 +20,8 @@ npm install
 ```bash
 quasar dev
 ```
+
+### Before starting web app need to run 'ticket-management-system-laravel' backend application
 
 
 ### Dotenv module is used for loads environment variables from a .env file into process.env.
